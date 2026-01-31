@@ -1,32 +1,58 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React from "react";
+import { ArrowRight } from "lucide-react";
+import { Canvas } from "@react-three/fiber";
+import FloatingModel from "./FloatingModel";
+import SplineComponent from "./Spline";
 
 const Hero = () => {
   return (
-    <div id='hero' className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 bg-[#0a0a0a]">
-      {/* Background Glow Effect */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-100 bg-yellow-500/10 blur-[120px] rounded-full"></div>
+    <div id="hero" className="relative min-h-screen bg-[#0a0a0a] overflow-hidden">
+      {/* Background 3D Layer */}
+      <div className="absolute inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[2, 2, 2]} intensity={1} />
+          <FloatingModel />
+        </Canvas>
       </div>
 
-      <div className="relative z-10 max-w-3xl">
-        <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-          Share Your <span className="bg-linear-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Thoughts</span> <br />
-          With The World
-        </h2>
+      {/* Main Content Grid */}
+      <div className="relative z-10 min-h-screen grid grid-cols-1 lg:grid-cols-12 items-center px-6 md:px-20 gap-8">
         
-        <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-          A minimalist dark-themed platform for writers, thinkers, and creators. 
-          Connect with others through the power of words.
-        </p>
+        {/* LEFT: TEXT CONTENT (Span 7 columns) */}
+        <div className="lg:col-span-7 text-center lg:text-left pt-20 lg:pt-0">
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+            Share Your{" "}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+              Thoughts
+            </span>
+            <br />
+            With The World
+          </h2>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button className="flex items-center gap-2 bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-gray-200 transition">
-            Start Reading <ArrowRight size={18} />
-          </button>
-          <button className="bg-zinc-900 text-white border border-zinc-800 px-8 py-3 rounded-full font-bold hover:bg-zinc-800 transition">
-            Join Community
-          </button>
+          <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-xl mx-auto lg:mx-0">
+            A minimalist dark-themed platform for writers, thinkers, and
+            creators. Connect with others through the power of words.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <button className="flex items-center justify-center gap-2 bg-white text-black px-10 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-lg shadow-white/5">
+              Start Reading <ArrowRight size={20} />
+            </button>
+            <button className="bg-zinc-900 text-white border border-zinc-800 px-10 py-4 rounded-full font-bold hover:bg-zinc-800 transition-all">
+              Join Community
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT: SPLINE MODEL (Span 5 columns) */}
+        <div className="lg:col-span-5 relative h-[500px] lg:h-[650px] w-full flex items-center justify-center">
+          {/* Subtle Glow behind the 3D model */}
+          <div className="absolute w-80 h-80 bg-purple-600/20 blur-[100px] rounded-full"></div>
+          
+          <div className="w-full h-full scale-110 lg:scale-125 translate-x-4 lg:translate-x-10">
+             <SplineComponent />
+          </div>
         </div>
       </div>
     </div>
